@@ -11,25 +11,7 @@ public class Jogos {
     boolean qmaximo;
     
         public Jogos(int njogo, int placar){
-        this.njogo = njogo;
-        this.placar = placar;
-//       
-//        //minimo
-//        if (this.placar < placar){
-//            minimo = this.placar;
-//        }else{
-//            minimo = placar;
-//        }
-//         
-//        //maximo
-//        if (this.placar > placar){
-//            maximo = this.placar;
-//        } else {
-//            maximo = placar;
-//        }
-//        
-       
-       
+        
         
     }
 

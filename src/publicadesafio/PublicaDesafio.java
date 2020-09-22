@@ -2,6 +2,7 @@
 package publicadesafio;
 
 import java.util.ArrayList;
+import views.*;
 
 public class PublicaDesafio {
     
@@ -18,7 +19,14 @@ public class PublicaDesafio {
     Jogos.add(jogo2);
     Jogos.add(jogo3);   
     Jogos.add(jogo4);
-
+    
+    Interface interfaceInicial = new Interface();
+        interfaceInicial.setVisible(true);
+        
+    
+    
+    for(Jogos j : Jogos)
+        System.out.println(j.getMinimo());
     
 
     }
