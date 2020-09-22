@@ -1,9 +1,9 @@
 
 package views;
 
-import com.sun.xml.internal.bind.v2.runtime.RuntimeUtil;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import publicadesafio.*;
+import publicadesafio.Jogos;
 public class Interface extends javax.swing.JFrame {
 
 
@@ -35,13 +35,22 @@ public class Interface extends javax.swing.JFrame {
             new String [] {
                 "Jogo", "Placar", "Recorde  Mín.", "Recorde Máx.", "Quebras de recorde mín.", "Quebras de recorde máx."
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabelaJogos.getTableHeader().setReorderingAllowed(false);
+        tabelaJogos.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                tabelaJogosComponentAdded(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaJogos);
-        if (tabelaJogos.getColumnModel().getColumnCount() > 0) {
-            tabelaJogos.getColumnModel().getColumn(0).setResizable(false);
-            tabelaJogos.getColumnModel().getColumn(1).setResizable(false);
-        }
 
         txtNovoJogo.setText("Novo Jogo");
 
@@ -54,13 +63,29 @@ public class Interface extends javax.swing.JFrame {
 
         txtPlacarFormatado.setText("Placar");
         txtPlacarFormatado.setToolTipText("");
+        txtPlacarFormatado.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtPlacarFormatado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPlacarFormatadoMouseClicked(evt);
+            }
+        });
         txtPlacarFormatado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPlacarFormatadoActionPerformed(evt);
             }
         });
+        txtPlacarFormatado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPlacarFormatadoKeyTyped(evt);
+            }
+        });
 
         botaoDeletaJogo.setText("Excluir");
+        botaoDeletaJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDeletaJogoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout fundoLayout = new javax.swing.GroupLayout(fundo);
         fundo.setLayout(fundoLayout);
@@ -117,20 +142,49 @@ public class Interface extends javax.swing.JFrame {
 
     private void botaoAdicionarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarJogoActionPerformed
        
+       
        DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
+//       Object[] dados = {new publicadesafio.Jogos(Jogos.getInstanceCount(), txtPlacarFormatado.getText())};
+
        Object[] dados = {txtPlacarFormatado.getText()};
        dtmdadosTabela.addRow(dados);
-       
-       
-        
-        
+       txtPlacarFormatado.setText("Placar");
+           
         
     }//GEN-LAST:event_botaoAdicionarJogoActionPerformed
 
     private void txtPlacarFormatadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoActionPerformed
-       
+        
        
     }//GEN-LAST:event_txtPlacarFormatadoActionPerformed
+
+    private void botaoDeletaJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletaJogoActionPerformed
+       
+        DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
+        
+        if (tabelaJogos.getSelectedRow() >= 0){
+            dtmdadosTabela.removeRow(tabelaJogos.getSelectedRow());
+            tabelaJogos.setModel(dtmdadosTabela);
+        }else{
+            JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
+        }
+        
+    }//GEN-LAST:event_botaoDeletaJogoActionPerformed
+
+    private void txtPlacarFormatadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoMouseClicked
+        txtPlacarFormatado.setText("");
+    }//GEN-LAST:event_txtPlacarFormatadoMouseClicked
+
+    private void txtPlacarFormatadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoKeyTyped
+        String caracteres="0987654321";
+            if(!caracteres.contains(evt.getKeyChar()+"")){
+        evt.consume();
+        }
+    }//GEN-LAST:event_txtPlacarFormatadoKeyTyped
+
+    private void tabelaJogosComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelaJogosComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaJogosComponentAdded
 
     /**
      * @param args the command line arguments

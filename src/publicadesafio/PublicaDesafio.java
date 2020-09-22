@@ -23,11 +23,7 @@ public class PublicaDesafio {
     Interface interfaceInicial = new Interface();
         interfaceInicial.setVisible(true);
         
-    
-    
-    for(Jogos j : Jogos)
-        System.out.println(j.getMinimo());
-    
+   
 
     }
     

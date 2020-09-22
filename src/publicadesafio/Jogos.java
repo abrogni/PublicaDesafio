@@ -9,10 +9,18 @@ public class Jogos {
     private int maximo;
     boolean qminimo;
     boolean qmaximo;
+    protected static int cont = 0;
     
+        //construtor pedindo os parametros
         public Jogos(int njogo, int placar){
-        
-        
+            cont++;
+    }   
+        //contador
+        protected void finalize() throws Throwable {
+        cont--;
+    } 
+         public static int getInstanceCount() {
+        return cont;
     }
 
     public int getNjogo() {
