@@ -138,21 +138,36 @@ public class Interface extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoAdicionarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarJogoActionPerformed
        
+       Jogos jogo = new Jogos();
+       jogo.setPlacar(Integer.parseInt(txtPlacarFormatado.getText()));
+       Jogos.adicionaJogos(jogo);
        
-       DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
-//       Object[] dados = {new publicadesafio.Jogos(Jogos.getInstanceCount(), txtPlacarFormatado.getText())};
-
-       Object[] dados = {txtPlacarFormatado.getText()};
-       dtmdadosTabela.addRow(dados);
-       txtPlacarFormatado.setText("Placar");
-           
+       atualizarTabela();
+       
+       
         
     }//GEN-LAST:event_botaoAdicionarJogoActionPerformed
 
+    private void atualizarTabela(){
+        DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
+        
+        dtmdadosTabela.setRowCount(0);
+        
+        for(Jogos jogo : Jogos.getJogos()){
+           
+       
+        
+            Object[] dados = {jogo.getNumero(), jogo.getPlacar(), jogo.getMinimoTemporada(), jogo.getMaximoTemporada(), jogo.getQuebraMinimo(), jogo.getQuebraMaximo()};       
+            dtmdadosTabela.addRow(dados);
+            
+          
+        }
+    }
     private void txtPlacarFormatadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoActionPerformed
         
        
@@ -183,7 +198,8 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPlacarFormatadoKeyTyped
 
     private void tabelaJogosComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelaJogosComponentAdded
-        // TODO add your handling code here:
+       
+        
     }//GEN-LAST:event_tabelaJogosComponentAdded
 
     /**

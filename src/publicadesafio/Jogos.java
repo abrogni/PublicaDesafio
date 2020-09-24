@@ -1,34 +1,84 @@
-
 package publicadesafio;
 
+import java.util.ArrayList;
 
 public class Jogos {
-    private int njogo;
-    private int placar;
-    private int minimo;
-    private int maximo;
-    boolean qminimo;
-    boolean qmaximo;
-    protected static int cont = 0;
-    
-        //construtor pedindo os parametros
-        public Jogos(int njogo, int placar){
-            cont++;
-    }   
-        //contador
-        protected void finalize() throws Throwable {
-        cont--;
-    } 
-         public static int getInstanceCount() {
+
+    public static int getCont() {
         return cont;
     }
 
-    public int getNjogo() {
-        return njogo;
+    public static void setCont(int aCont) {
+        cont = aCont;
+    }
+    private int numero;
+    private int placar;
+    private int minimoTemporada = 0;
+    private int maximoTemporada = 0;
+    private int quebraMinimo;
+    private int quebraMaximo;
+    private static int cont = 0;
+    private static int contQuebraRec = 0;
+
+    private static ArrayList<Jogos> jogos = new ArrayList();
+
+    public static void adicionaJogos(Jogos jogo) {
+        cont++;
+        contQuebraRec++;
+        jogo.setNumero(cont);
+
+        jogos.add(jogo);
+        atribuiMinimoDaTemporada(jogo);
+        atribuiMaximoDaTemporada(jogo);
+//        atribuiQuebraMin(jogo);
     }
 
-    public void setNjogo(int njogo) {
-        this.njogo = njogo;
+    public static void atribuiMinimoDaTemporada(Jogos jogo) {
+        int minimo = Integer.MAX_VALUE;
+        for (Jogos j : getJogos()) {
+            if (minimo > j.getPlacar()) {
+                minimo = j.getPlacar();  
+            }
+        }
+        if (minimo == Integer.MAX_VALUE) {
+            minimo = jogo.getPlacar();
+        }        
+        jogo.setMinimoTemporada(minimo);
+        
+        
+    }
+
+    public static void atribuiMaximoDaTemporada(Jogos jogo) {
+        int maximo = Integer.MIN_VALUE;       
+        for (Jogos j : getJogos()) {
+            if (maximo < j.getPlacar()) {
+                maximo = j.getPlacar();
+            }
+        }
+        if (maximo == Integer.MIN_VALUE) {
+            maximo = jogo.getPlacar();
+        }
+        jogo.setMaximoTemporada(maximo);       
+    }
+    
+//    public static void atribuiQuebraMin(Jogos jogo){
+//      
+//        if(jogo.getMinimoTemporada()){
+//            jogo.setQuebraMinimo(cont);
+//        }
+//    }
+    
+    
+            public static ArrayList<Jogos> getJogos() {
+        return jogos;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public int getPlacar() {
@@ -39,19 +89,35 @@ public class Jogos {
         this.placar = placar;
     }
 
-    public int getMinimo() {
-        return minimo;
+    public int getMinimoTemporada() {
+        return minimoTemporada;
     }
 
-    public void setMinimo(int minimo) {
-        this.minimo = minimo;
+    public void setMinimoTemporada(int minimoTemporada) {
+        this.minimoTemporada = minimoTemporada;
     }
 
-    public int getMaximo() {
-        return maximo;
+    public int getMaximoTemporada() {
+        return maximoTemporada;
     }
 
-    public void setMaximo(int maximo) {
-        this.maximo = maximo;
+    public void setMaximoTemporada(int maximoTemporada) {
+        this.maximoTemporada = maximoTemporada;
     }
+
+    public int getQuebraMinimo() {
+        return quebraMinimo;
+    }
+
+    public void setQuebraMinimo(int quebraMinimo) {
+        this.quebraMinimo = quebraMinimo;
+    }
+
+    public int getQuebraMaximo() {
+        return quebraMaximo;
+    }
+    
+    public void setQuebraMaximo(int quebraMaximo) {
+        this.quebraMaximo = quebraMaximo;
+    }    
 }
