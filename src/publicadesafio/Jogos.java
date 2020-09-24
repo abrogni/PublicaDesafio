@@ -11,45 +11,46 @@ public class Jogos {
     public static void setCont(int aCont) {
         cont = aCont;
     }
+
     private int numero;
     private int placar;
-    private int minimoTemporada = 0;
-    private int maximoTemporada = 0;
+    private int minimoTemporada;
+    private int maximoTemporada;
     private int quebraMinimo;
     private int quebraMaximo;
     private static int cont = 0;
-    private static int contQuebraRec = 0;
 
     private static ArrayList<Jogos> jogos = new ArrayList();
 
     public static void adicionaJogos(Jogos jogo) {
         cont++;
-        contQuebraRec++;
         jogo.setNumero(cont);
 
         jogos.add(jogo);
         atribuiMinimoDaTemporada(jogo);
         atribuiMaximoDaTemporada(jogo);
-//        atribuiQuebraMin(jogo);
+        atribuiQuebraMin(jogo);
+        atribuiQuebraMax(jogo);
     }
 
     public static void atribuiMinimoDaTemporada(Jogos jogo) {
         int minimo = Integer.MAX_VALUE;
         for (Jogos j : getJogos()) {
             if (minimo > j.getPlacar()) {
-                minimo = j.getPlacar();  
+                minimo = j.getPlacar();
+
             }
         }
         if (minimo == Integer.MAX_VALUE) {
             minimo = jogo.getPlacar();
-        }        
+        }
+
         jogo.setMinimoTemporada(minimo);
-        
-        
+
     }
 
     public static void atribuiMaximoDaTemporada(Jogos jogo) {
-        int maximo = Integer.MIN_VALUE;       
+        int maximo = Integer.MIN_VALUE;
         for (Jogos j : getJogos()) {
             if (maximo < j.getPlacar()) {
                 maximo = j.getPlacar();
@@ -58,18 +59,33 @@ public class Jogos {
         if (maximo == Integer.MIN_VALUE) {
             maximo = jogo.getPlacar();
         }
-        jogo.setMaximoTemporada(maximo);       
+        jogo.setMaximoTemporada(maximo);
+
+    }
+
+    public static void atribuiQuebraMin(Jogos jogo) {
+
+        int contq = 0;
+        for (Jogos j : getJogos()) {
+            if (j.getMinimoTemporada() == j.getPlacar()) {
+                contq++;
+            }
+            jogo.setQuebraMinimo(contq);
+        }
     }
     
-//    public static void atribuiQuebraMin(Jogos jogo){
-//      
-//        if(jogo.getMinimoTemporada()){
-//            jogo.setQuebraMinimo(cont);
-//        }
-//    }
-    
-    
-            public static ArrayList<Jogos> getJogos() {
+    public static void atribuiQuebraMax(Jogos jogo) {
+
+        int contq = 0;
+        for (Jogos j : getJogos()) {
+            if (j.getMaximoTemporada() == j.getPlacar()) {
+                contq++;
+            }
+            jogo.setQuebraMaximo(contq);
+        }
+    }
+
+    public static ArrayList<Jogos> getJogos() {
         return jogos;
     }
 
@@ -116,8 +132,8 @@ public class Jogos {
     public int getQuebraMaximo() {
         return quebraMaximo;
     }
-    
+
     public void setQuebraMaximo(int quebraMaximo) {
         this.quebraMaximo = quebraMaximo;
-    }    
+    }
 }

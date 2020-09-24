@@ -1,16 +1,14 @@
-
 package views;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import publicadesafio.Jogos;
-public class Interface extends javax.swing.JFrame {
 
+public class Interface extends javax.swing.JFrame {
 
     public Interface() {
         initComponents();
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -142,48 +140,44 @@ public class Interface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoAdicionarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarJogoActionPerformed
-       
-       Jogos jogo = new Jogos();
-       jogo.setPlacar(Integer.parseInt(txtPlacarFormatado.getText()));
-       Jogos.adicionaJogos(jogo);
-       
-       atualizarTabela();
-       
-       
-        
+
+        Jogos jogo = new Jogos();
+        jogo.setPlacar(Integer.parseInt(txtPlacarFormatado.getText()));
+        Jogos.adicionaJogos(jogo);
+
+        atualizarTabela();
+
+
     }//GEN-LAST:event_botaoAdicionarJogoActionPerformed
 
-    private void atualizarTabela(){
+    private void atualizarTabela() {
         DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
-        
+
         dtmdadosTabela.setRowCount(0);
-        
-        for(Jogos jogo : Jogos.getJogos()){
-           
-       
-        
-            Object[] dados = {jogo.getNumero(), jogo.getPlacar(), jogo.getMinimoTemporada(), jogo.getMaximoTemporada(), jogo.getQuebraMinimo(), jogo.getQuebraMaximo()};       
+
+        for (Jogos jogo : Jogos.getJogos()) {
+
+            Object[] dados = {jogo.getNumero(), jogo.getPlacar(), jogo.getMinimoTemporada(), jogo.getMaximoTemporada(), jogo.getQuebraMinimo(), jogo.getQuebraMaximo()};
             dtmdadosTabela.addRow(dados);
-            
-          
+
         }
     }
     private void txtPlacarFormatadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoActionPerformed
-        
-       
+
+
     }//GEN-LAST:event_txtPlacarFormatadoActionPerformed
 
     private void botaoDeletaJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletaJogoActionPerformed
-       
+
         DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
-        
-        if (tabelaJogos.getSelectedRow() >= 0){
+
+        if (tabelaJogos.getSelectedRow() >= 0) {
             dtmdadosTabela.removeRow(tabelaJogos.getSelectedRow());
             tabelaJogos.setModel(dtmdadosTabela);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
         }
-        
+
     }//GEN-LAST:event_botaoDeletaJogoActionPerformed
 
     private void txtPlacarFormatadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoMouseClicked
@@ -191,15 +185,15 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPlacarFormatadoMouseClicked
 
     private void txtPlacarFormatadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoKeyTyped
-        String caracteres="0987654321";
-            if(!caracteres.contains(evt.getKeyChar()+"")){
-        evt.consume();
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
         }
     }//GEN-LAST:event_txtPlacarFormatadoKeyTyped
 
     private void tabelaJogosComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelaJogosComponentAdded
-       
-        
+
+
     }//GEN-LAST:event_tabelaJogosComponentAdded
 
     /**
