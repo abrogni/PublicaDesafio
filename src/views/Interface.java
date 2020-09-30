@@ -24,6 +24,7 @@ public class Interface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Relatório");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/2015660.png")).getImage());
         setResizable(false);
 
         tabelaJogos.setModel(new javax.swing.table.DefaultTableModel(
@@ -140,21 +141,20 @@ public class Interface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoAdicionarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarJogoActionPerformed
-
+        //Adiciona um novo Jogo na tabela da interface
         Jogos jogo = new Jogos();
         jogo.setPlacar(Integer.parseInt(txtPlacarFormatado.getText()));
         Jogos.adicionaJogos(jogo);
 
         atualizarTabela();
-
+        txtPlacarFormatado.setText("");
 
     }//GEN-LAST:event_botaoAdicionarJogoActionPerformed
 
     private void atualizarTabela() {
+        //
         DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
-
         dtmdadosTabela.setRowCount(0);
-
         for (Jogos jogo : Jogos.getJogos()) {
 
             Object[] dados = {jogo.getNumero(), jogo.getPlacar(), jogo.getMinimoTemporada(), jogo.getMaximoTemporada(), jogo.getQuebraMinimo(), jogo.getQuebraMaximo()};
@@ -164,27 +164,33 @@ public class Interface extends javax.swing.JFrame {
     }
     private void txtPlacarFormatadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoActionPerformed
 
-
     }//GEN-LAST:event_txtPlacarFormatadoActionPerformed
 
     private void botaoDeletaJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletaJogoActionPerformed
-
+        //Remove o objeto do Array e a linha da tabela
         DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
+        for (Jogos jogo : Jogos.getJogos()) {
+            if (tabelaJogos.getSelectedRow() >= 0) {
 
-        if (tabelaJogos.getSelectedRow() >= 0) {
-            dtmdadosTabela.removeRow(tabelaJogos.getSelectedRow());
-            tabelaJogos.setModel(dtmdadosTabela);
-        } else {
-            JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
+                jogo.setIndexDeleta(tabelaJogos.getSelectedRow());
+                dtmdadosTabela.removeRow(tabelaJogos.getSelectedRow());
+                Jogos.deletaJogo(jogo);
+                atualizarTabela();
+                tabelaJogos.setModel(dtmdadosTabela);
+            } else {
+                JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");//caso nenhuma linha seja selecionada
+                break;
+            }
         }
-
     }//GEN-LAST:event_botaoDeletaJogoActionPerformed
 
     private void txtPlacarFormatadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoMouseClicked
+        //Limpa o campo de texto
         txtPlacarFormatado.setText("");
     }//GEN-LAST:event_txtPlacarFormatadoMouseClicked
 
     private void txtPlacarFormatadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPlacarFormatadoKeyTyped
+        //Limita apenas números no campo de texto
         String caracteres = "0987654321";
         if (!caracteres.contains(evt.getKeyChar() + "")) {
             evt.consume();
@@ -241,4 +247,5 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JLabel txtNovoJogo;
     private javax.swing.JFormattedTextField txtPlacarFormatado;
     // End of variables declaration//GEN-END:variables
+
 }
