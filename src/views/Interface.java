@@ -149,8 +149,6 @@ public class Interface extends javax.swing.JFrame {
         atualizarTabela();
         //limpa o campo de texto
         txtPlacarFormatado.setText("");
-        
-
     }//GEN-LAST:event_botaoAdicionarJogoActionPerformed
 
     private void atualizarTabela() {
