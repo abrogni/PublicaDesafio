@@ -23,7 +23,7 @@ public class Interface extends javax.swing.JFrame {
         botaoDeletaJogo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Relatório");
+        setTitle("Desafio Pública");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/2015660.png")).getImage());
         setResizable(false);
 
@@ -143,20 +143,21 @@ public class Interface extends javax.swing.JFrame {
     private void botaoAdicionarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarJogoActionPerformed
         //Adiciona um novo Jogo na tabela da interface
         Jogos jogo = new Jogos();
-        jogo.setPlacar(Integer.parseInt(txtPlacarFormatado.getText()));
+        jogo.setPlacar(Integer.parseInt(txtPlacarFormatado.getText()));//estabelece o placar
         Jogos.adicionaJogos(jogo);
 
         atualizarTabela();
+        //limpa o campo de texto
         txtPlacarFormatado.setText("");
 
     }//GEN-LAST:event_botaoAdicionarJogoActionPerformed
 
     private void atualizarTabela() {
-        //
+
         DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
         dtmdadosTabela.setRowCount(0);
         for (Jogos jogo : Jogos.getJogos()) {
-
+            //todos os parâmetros da tabela
             Object[] dados = {jogo.getNumero(), jogo.getPlacar(), jogo.getMinimoTemporada(), jogo.getMaximoTemporada(), jogo.getQuebraMinimo(), jogo.getQuebraMaximo()};
             dtmdadosTabela.addRow(dados);
 
@@ -170,15 +171,24 @@ public class Interface extends javax.swing.JFrame {
         //Remove o objeto do Array e a linha da tabela
         DefaultTableModel dtmdadosTabela = (DefaultTableModel) tabelaJogos.getModel();
         for (Jogos jogo : Jogos.getJogos()) {
-            if (tabelaJogos.getSelectedRow() >= 0) {
+            //Confirmação
+            int resposta = JOptionPane.showConfirmDialog(this, "Você tem certeza que deseja remover o jogo?", "Aviso!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-                jogo.setIndexDeleta(tabelaJogos.getSelectedRow());
-                dtmdadosTabela.removeRow(tabelaJogos.getSelectedRow());
-                Jogos.deletaJogo(jogo);
-                atualizarTabela();
-                tabelaJogos.setModel(dtmdadosTabela);
-            } else {
-                JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");//caso nenhuma linha seja selecionada
+            if (resposta == JOptionPane.YES_OPTION) {
+                if (tabelaJogos.getSelectedRow() >= 0) {
+                    jogo.setIndexDeleta(tabelaJogos.getSelectedRow());
+                    dtmdadosTabela.removeRow(tabelaJogos.getSelectedRow());
+                    Jogos.deletaJogo(jogo);
+                    atualizarTabela();
+                    tabelaJogos.setModel(dtmdadosTabela);
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");//caso nenhuma linha seja selecionada
+                    break;
+                }
+            } else if (resposta == JOptionPane.NO_OPTION) {
+                break;
+            } else if (resposta == JOptionPane.CLOSED_OPTION) {
                 break;
             }
         }

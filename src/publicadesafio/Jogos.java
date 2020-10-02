@@ -1,9 +1,9 @@
 package publicadesafio;
 
 import java.util.ArrayList;
-import views.Interface;
 
 public class Jogos {
+
     //Atributos de todos os jogos.
     private int numero;
     private int placar;
@@ -15,14 +15,14 @@ public class Jogos {
     private static int indexDeleta;
 
     private static ArrayList<Jogos> jogos = new ArrayList();
+
     //Declaração do ArrayList 
     public static void adicionaJogos(Jogos jogo) {
         //Método que adiciona os jogos no Array com os atributos declarados
-        
+
         //Contador que define o número que identifica cada jogo
         cont++;
         jogo.setNumero(cont);
-
         jogos.add(jogo);
         atribuiMinimoDaTemporada(jogo);
         atribuiMaximoDaTemporada(jogo);
@@ -36,13 +36,11 @@ public class Jogos {
         for (Jogos j : getJogos()) {
             if (minimo > j.getPlacar()) {
                 minimo = j.getPlacar();
-
             }
         }
         if (minimo == Integer.MAX_VALUE) {
             minimo = jogo.getPlacar();
         }
-
         jogo.setMinimoTemporada(minimo);
 
     }
@@ -59,26 +57,24 @@ public class Jogos {
             maximo = jogo.getPlacar();
         }
         jogo.setMaximoTemporada(maximo);
-
     }
 
     public static void atribuiQuebraMin(Jogos jogo) {
 
         //Conta as vezes que o récorde mínimo é quebrado
-        int contq = 0;
+        int contq = -1;
         for (Jogos j : getJogos()) {
             if (j.getMinimoTemporada() == j.getPlacar()) {
                 contq++;
             }
-            
             jogo.setQuebraMinimo(contq);
         }
     }
-    
+
     public static void atribuiQuebraMax(Jogos jogo) {
 
         //Conta as vezes que o récorde máximo é quebrado
-        int contq = 0;
+        int contq = -1;
         for (Jogos j : getJogos()) {
             if (j.getMaximoTemporada() == j.getPlacar()) {
                 contq++;
@@ -86,12 +82,10 @@ public class Jogos {
             jogo.setQuebraMaximo(contq);
         }
     }
-    
-    public static void deletaJogo (Jogos jogo) {
+
+    public static void deletaJogo(Jogos jogo) {
         //Remove o objeto Jogo do Array, pelo botão da interface
-        
-            jogos.remove(jogo.indexDeleta);
-        
+        jogos.remove(Jogos.indexDeleta);
     }
 
     //Getters e setters
@@ -106,7 +100,7 @@ public class Jogos {
     public void setNumero(int numero) {
         this.numero = numero;
     }
-    
+
     public static int getCont() {
         return cont;
     }
@@ -114,7 +108,7 @@ public class Jogos {
     public static void setCont(int aCont) {
         cont = aCont;
     }
-    
+
     public int getPlacar() {
         return placar;
     }
